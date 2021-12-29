@@ -55,13 +55,13 @@ def main():
 
     st.subheader(f'Total arrived: {len(df_arrived)}')
 
-    with st.beta_expander('מידע גולמי', expanded=False):
+    with st.expander('מידע גולמי', expanded=False):
         df
 
 
     unique_pluga = tuple(df_arrived.pluga.unique())
     unique_team = tuple(df_arrived.team.unique())
-    with st.beta_expander('כמה הגיעו מכל מסגרת', expanded=True):
+    with st.expander('כמה הגיעו מכל מסגרת', expanded=True):
         group_by = 'pluga' if len(unique_pluga) != 1 or len(unique_team) == 1 else 'team'
         df_arrived_count = df_arrived.groupby(group_by).agg({'mi': 'count'}).rename(columns={'mi': 'count'}).sort_values(
             'count')
@@ -69,13 +69,19 @@ def main():
         st.bar_chart(df_arrived_count)
 
     if 'group' in df_arrived.columns:
-        with st.beta_expander('כמה יש בכל קבוצה', expanded=False):
+        with st.expander('כמה יש בכל קבוצה', expanded=False):
             df_teams = df_arrived.groupby('group').agg({'mi': 'count'}).rename(columns={'mi': 'counts'}).sort_values(
                 'counts', ascending=False)
             df_teams
             st.bar_chart(df_teams)
 
-    with st.beta_expander('זמני הגעה', expanded=True):
+    with st.expander('מעקב ביצוע תחנות', expanded=True):
+        group_by = 'pluga'
+        # df_arrived_count = df_arrived.groupby(group_by).agg({'mi': 'count'}).rename(columns={'mi': 'count'}).sort_values('count')
+        df_arrived_count = df.groupby('pluga')['station1','station2','station3','station4'].count()
+        df_arrived_count
+
+    with st.expander('זמני הגעה', expanded=True):
         cols = ['pluga', 'hour', 'team'] + [c for c in df_arrived.columns if 'name' in c]
         dfc = df_arrived[cols]
         dfc = dfc.sort_values('hour').reset_index()

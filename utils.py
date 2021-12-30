@@ -79,6 +79,7 @@ class DataBundle:
 
         df: pd.DataFrame = df.rename(columns=renames)
         df.pluga = df.pluga.apply(lambda p: str(p).replace('"', ''))
+        df = df.replace(['FALSE'], None)
         df.infer_objects()
 
         # df['arrived'] = df.hour.apply(lambda v: True if v and not np.isnan(v) else False).astype(bool)

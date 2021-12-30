@@ -18,10 +18,9 @@ reverse_renames = {
     # 'group': 'קבוצה',
     'group': 'צוות',
     'hour': 'שעה',
-    'station1': 'תחנה 1',
-    'station2': 'תחנה 2',
-    'station3': 'תחנה 3',
-    'station4': 'תחנה 4'
+    'station1': 'מערים קרב מגע',
+    'station2': 'מטווחים פרט',
+    'station3': 'בית הירי',
 }
 
 renames = {v: k for k, v in reverse_renames.items()}

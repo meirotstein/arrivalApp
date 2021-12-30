@@ -78,7 +78,8 @@ def main():
     with st.beta_expander('מעקב ביצוע תחנות', expanded=True):
         group_by = 'pluga'
         # df_arrived_count = df_arrived.groupby(group_by).agg({'mi': 'count'}).rename(columns={'mi': 'count'}).sort_values('count')
-        df_arrived_count = df.groupby('pluga')['station1','station2','station3','station4'].count()
+        df_arrived_count = df.groupby('pluga')['station1','station2','station3'].count().rename(columns={
+            'station1':'מערים, קרב מגע','station2':'מטווחים פרט','station3':'בית הירי'})
         df_arrived_count
 
     with st.beta_expander('זמני הגעה', expanded=True):

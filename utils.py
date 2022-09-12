@@ -21,6 +21,7 @@ reverse_renames = {
     'station1': 'מערים קרב מגע',
     'station2': 'מטווחים פרט',
     'station3': 'בית הירי',
+    'expected': 'צפי הגעה',
 }
 
 renames = {v: k for k, v in reverse_renames.items()}
@@ -85,6 +86,7 @@ class DataBundle:
         # df['arrived'] = df.hour.apply(lambda v: True if v and not np.isnan(v) else False).astype(bool)
         df['hour'] = df.hour.apply(get_time)
         df['arrived'] = df.hour.apply(get_arrived).astype(bool)
+        df['expectedBool'] = df.expected == 'TRUE'
         if 'team' not in df.columns:
             df = df.assign(team='?')
         return df.sort_values('hour').reset_index(drop=True).copy()

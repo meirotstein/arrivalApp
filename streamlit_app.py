@@ -52,8 +52,9 @@ def main():
     inputs = get_sidebar_inputs()
     df: pd.DataFrame = inputs
     df_arrived = df[df.arrived]
+    df_expected = df[df.expectedBool]
 
-    st.subheader(f'Total arrived: {len(df_arrived)}')
+    st.subheader(f'Total Arrived: {len(df_arrived)}/{len(df_expected)}')
 
     with st.beta_expander('מידע גולמי', expanded=False):
         df

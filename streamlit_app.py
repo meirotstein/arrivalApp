@@ -64,10 +64,17 @@ def main():
     unique_team = tuple(df_arrived.team.unique())
     with st.beta_expander('כמה הגיעו מכל מסגרת', expanded=True):
         group_by = 'pluga' if len(unique_pluga) != 1 or len(unique_team) == 1 else 'team'
-        df_arrived_count = df_arrived.groupby(group_by).agg({'mi': 'count'}).rename(columns={'mi': 'count'}).sort_values(
-            'count')
-        df_arrived_count
-        st.bar_chart(df_arrived_count)
+        df_arrived_count = df_arrived.groupby(group_by).agg({'mi': 'count'}).rename(columns={'mi': 'הגיעו'}).sort_values(
+            'הגיעו')
+        df_expected_count = df_expected.groupby(group_by).agg({'mi': 'count'}).rename(columns={'mi': 'צפי'}).sort_values(
+            'צפי')
+        df_arrived_vs_expected = df_arrived_count.join(df_expected_count)
+        df_arrived_vs_expected_vs_percentage = df_arrived_vs_expected.assign(
+            percentage=lambda dfa: dfa["הגיעו"] * dfa["צפי"] / 100,
+        ).rename(columns={'percentage': '%'})
+        df_arrived_vs_expected_vs_percentage
+        percentage_col = df_arrived_vs_expected_vs_percentage.loc[:,"%"];
+        st.bar_chart(percentage_col)
 
     if 'group' in df_arrived.columns:
         with st.beta_expander('כמה יש בכל קבוצה', expanded=False):

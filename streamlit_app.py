@@ -70,7 +70,7 @@ def main():
             'צפי')
         df_arrived_vs_expected = df_arrived_count.join(df_expected_count)
         df_arrived_vs_expected_vs_percentage = df_arrived_vs_expected.assign(
-            percentage=lambda dfa: dfa["הגיעו"] * dfa["צפי"] / 100,
+            percentage=lambda dfa: round(dfa["הגיעו"] / dfa["צפי"] * 100, 2),
         ).rename(columns={'percentage': '%'})
         df_arrived_vs_expected_vs_percentage
         percentage_col = df_arrived_vs_expected_vs_percentage.loc[:,"%"];
